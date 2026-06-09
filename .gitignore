@@ -25,3 +25,6 @@ Thumbs.db
 /package.json
 /composer.json
 /composer.lock
+/.env.example
+/.editorconfig
+
