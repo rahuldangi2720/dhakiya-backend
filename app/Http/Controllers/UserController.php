@@ -18,4 +18,4 @@ class UserController extends Controller
 
   }
 }
-  // if any user login with its account then its account not showing in list only other users show its sccount
+  // if any user login with its account then its account not showing in list only other users show its sccount`
