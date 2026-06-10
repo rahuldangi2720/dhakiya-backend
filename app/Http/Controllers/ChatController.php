@@ -19,6 +19,25 @@ class ChatController extends Controller
                 'message' => 'You cannot chat with yourself'
             ], 400);
         }
+
+        $existingChat = Chat::whereHas('users', function ($query) use ($currentUserId) {
+
+            $query->where('users.id',$currentUserId);
+
+        })
+            ->whereHas('users', function ($query) use ($request) {
+
+                $query->where('users.id',$request->user_id);
+            })
+            ->first();
+            if ($existingChat){
+                return response()->json([
+                    'message'=>'chat already exists',
+                    'chat'=>$existingChat
+                ]);
+            }
+
+
         $chat = Chat::create([
             'type' => 'private'
         ]);
@@ -27,8 +46,13 @@ class ChatController extends Controller
             $currentUserId,
             $request->user_id
         ]);
+
+        
         return response()->json([
-            'message' => 'chat created successfully'
+            'message' => 'chat created successfully',
+            'chat' => $chat
         ]);
+
+        
     }
 }
